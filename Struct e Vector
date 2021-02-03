@@ -1,0 +1,78 @@
+#include <iostream>
+#include <locale.h>
+#include <vector>
+using namespace std;
+
+struct Quiz {
+	string comida;
+	string cor;
+	int favnumber;
+	string season;
+	string filme;
+	string serie;
+	int idade;
+};
+
+struct Cadastro {
+	string nome;
+	int intimidade;
+	Quiz quizzy;
+};
+
+
+int main () {
+	setlocale (LC_ALL, "Portuguese");
+	
+	Cadastro pessoa;
+	vector<Cadastro> pessoas;
+   
+    Quiz jogador;
+    vector<Quiz> player;
+    
+	cout << "******  Cadastro *******" << endl;
+	cout << "\nDigite o nome da pessoa" << endl;
+	getline(cin, pessoa.nome);
+
+	cout << "\nDigite de 1 a 10, o nível de intimidade comigo que você acha que tem?" << endl;
+	cin >> pessoa.intimidade;
+
+	cout << "\n***********QUIZ***********" << endl;
+	cout << "Qual a minha comida favorita?" << endl;
+	cin.ignore();
+	getline (cin, jogador.comida);
+
+	cout << "\nQual a minha cor favorita?" << endl;
+	cin >> jogador.cor;
+
+	cout << "\nQual meu número favorito/da sorte?" << endl;
+	cin >> jogador.favnumber;
+
+	cout << "\nQual a minha estação do ano favorita?" << endl;
+	cin >> jogador.season;
+
+	cout << "\nQual meu filme favorito?" << endl;
+	cin.ignore();
+	getline (cin, jogador.filme);
+	
+	cout << "\nQual a minha série favorita?" << endl;
+	getline (cin, jogador.serie);
+
+	cout << "\nQual a minha idade?" << endl;
+	cin >> jogador.idade;
+
+	system("pause");
+	system("cls");
+
+	cout << "\nDados digitados:" << endl;
+	pessoas.push_back(pessoa);
+	for(vector<Cadastro>::iterator it=pessoas.begin(); it!=pessoas.end(); it++) {
+		cout << it->nome << "\n" << it->intimidade << endl;
+	}
+	
+	player.push_back(jogador);
+	for(vector<Quiz>::iterator et=player.begin(); et!=player.end(); et++) {
+		cout << "\n" << et->comida << "\n" << et->cor << "\n" << et->favnumber << "\n" << et->season << "\n" << et->filme << "\n" << et->serie << "\n" << et->idade << endl;
+	}
+	
+	return 0;
+}
