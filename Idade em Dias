@@ -1,0 +1,46 @@
+#include<iostream>
+#include<locale.h>
+using namespace std;
+
+int main () {
+	setlocale(LC_ALL, "Portuguese");
+	int x, y;
+	
+	cout << "Usuário, digite sua data de nascimento no formato (ddmmaaaa), dê ENTER e digite a data atual, no mesmo formato.\n";
+	cin >> x;
+	cin >> y;
+	
+//Criei variáveis para a data de nascimento e a data atual, também criei a condição que define que elas precisam de 8 algarismos.
+	int diax, mesx, anox;
+	int diay, mesy, anoy;
+ 
+	diax=x/1000000;
+	mesx=(x%1000000)/10000;
+	anox=(x%10000);
+ 
+	diay=y/1000000;
+	mesy=(y%1000000)/10000;
+	anoy=(y%10000);
+ 
+	if (diax>31 || diay>31) {
+		cout << "\n[ERRO]";
+		return 0;
+	}
+  
+	if (mesx>12 || mesy>12) {
+		cout << "\n[ERRO]";
+		return 0; 
+	}
+  
+	if (anox>anoy){
+		cout << "\n[ERRO]";
+		return 0;
+	}
+  
+//Defini o valor específico de dia, mes e ano das duas datas.
+	int R;
+	R=(diay-diax) + (mesy-mesx)*30 + (anoy-anox)*365;
+	
+	cout << "\nA sua idade em dias é " << R;
+	return 0;
+}
