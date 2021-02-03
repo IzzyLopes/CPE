@@ -1,0 +1,73 @@
+#include <iostream>
+#include <locale.h>
+using namespace std;
+
+int main () {
+	setlocale(LC_ALL, "Portuguese");
+	cout << "\n**JOGO DA FORCA**\n";
+	cout << "\n\nDigite uma palavra para ser advinhada...\n";
+	cout << "OBS: a palavra deverá ser digitada completamente em letras minúsculas\n\n";
+	
+	string palavra = "";
+	cin >> palavra;
+	int tamanho = palavra.size();
+	
+	cout << "\nDigite o tema ao qual essa palavra esta relacionada" << endl;
+	string dica = "";
+	cin >> dica;
+	
+	system("cls");
+	
+	int tentativas=0;
+	int i;
+
+	cout << "\n\tDICA: \nEsta palavra tem " << palavra.size() << " letras." << endl;
+	cout << "Tema: " << dica << endl;
+	cout << "\nA resposta deve ser escrita completamente em letras minúsculas.";
+	
+	string erradas="";
+	string adv="";
+	
+	for(i=1; i <= tamanho; i++)
+		adv = adv + '*';
+	
+	cout << "\n\t" << adv << "\n";
+
+	while (true) {
+		cout << "\nDigite uma letra...\n";
+		char letra;
+		cin >> letra;
+		
+		tentativas++;
+		i=0;
+		bool acertou=false;
+
+		while (i<tamanho) {
+			if(letra == palavra[i]) {
+				adv[i] = letra;
+				system ("cls");
+				cout << "\n\t" << adv << "\n";
+				acertou=true;
+			}
+			
+			i++;
+			
+			if(adv==palavra){
+				cout << "\nPARABÉNS!! Você acertou\a";
+				cout << "\nEm " << tentativas << " tentativas";
+				return 0;
+			}
+		}
+
+		if (acertou==false) {
+			system("cls");
+			cout << "\nEsta letra não existe na palavra\n";
+			erradas=erradas+letra+'-';
+			cout << "Letras já jogadas\n";
+			cout << "\n" << erradas << "\n";
+			cout << "\n\t" << adv << "\n";
+		}
+	}
+	
+	return 0;
+}
