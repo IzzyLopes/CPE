@@ -1,0 +1,39 @@
+#include<iostream>
+#include<locale.h>
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+	cout << "\nUsuário, digite 8 números inteiros, separando-os por ENTER.\n";
+	int a, b, c, d, e, f, g, h;
+	cin >> a;
+	cin >> b;
+	cin >> c;
+	cin >> d;
+	cin >> e;
+	cin >> f;
+	cin >> g;
+	cin >> h;
+	
+// Como o usuário vai digitar 8 numeros inteiros, e não um número com 8 algarismos, decidi criar uma variável para cada número digitado pelo usuário.
+//Criei condições que definem se o número é ou não maior que a soma dos seus vizinhos.
+	cout << "\nQuais dos números digitados são maiores do que a soma dos seus vizinhos?";
+	if (b>a+c)
+		cout << "\nO 2° número! - Número " << b;
+	if (c>b+d)
+		cout << "\nO 3° número! - Número " << c;
+	if (d>c+e)
+		cout << "\nO 4° número! - Número " << d;
+	if (e>d+f)
+		cout << "\nO 5° número! - Número " << e;
+	if (f>e+g)
+		cout << "\nO 6° número! - Número " << f;
+	if (g>f+h)
+		cout << "\nO 7° número! - Número " << g;
+
+//Criei também esta condição que diz que se nenhuma das primeiras condições forem verdade, significa que nenhum número é maior que a soma dos seus vizinhos.
+	if(b<a+c && c<b+d && d<c+e && e<d+f && f<e+g && g<f+h)
+		cout << "\nNenhum deles...";		
+	
+	return 0;
+}
