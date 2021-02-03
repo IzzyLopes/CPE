@@ -1,0 +1,21 @@
+#include <iostream>
+#include <locale.h>
+using namespace std;
+
+int main () {
+	setlocale(LC_ALL, "Portuguese");
+	
+	int x;
+	cout << "Digite um número para que eu calcule o fatorial \n";
+	cin >> x;
+	
+	long long int n = 1;
+	
+	while (x>=1) {
+		n=n*x;
+		x--;
+	}
+	
+	cout << "O resultado do fatorial é " << n;
+	return 0;
+}
