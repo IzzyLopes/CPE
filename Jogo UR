@@ -1,0 +1,829 @@
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+#include <locale.h>
+using namespace std;
+
+void tabuleiro (string A[16],string B[16], string C[13]) {
+	A[4] = " * ";
+	A[14] = " * ";
+	B[4] = " * ";
+	B[14] = " * ";
+	C[8] = " * ";
+	A[0] = "INI";
+	A[15] = "FIM";	
+	B[0] = "INI";
+	B[15] = "FIM";
+	
+	//OBS para nn estragar o jogo
+	A[8] = " * ";
+	B[8] = " * ";
+	C[4] = " * ";
+	C[14] = " * ";
+	
+	for (int i=5; i<13; i++) {
+		A[i] = "   ";
+		B[i] = "   ";
+	}
+	
+	for (int i=0; i<5; i++) {
+		C[i] = "   ";
+	}
+	
+	cout << "\t\t\t\t\t" << "--------------------------------------" << endl;
+	cout << "\t\t\t\t\t" << "|    " << A[4] << "    |     " << C[5] << "    |    " << B[4] << "    |" << endl;
+	cout << "\t\t\t\t\t" << "|------------------------------------|" << endl;
+	cout << "\t\t\t\t\t" << "|    " << A[3] << "    |     " << C[6] << "    |    " << B[3] << "    |" << endl;
+	cout << "\t\t\t\t\t" << "|------------------------------------|" << endl;
+	cout << "\t\t\t\t\t" << "|    " << A[2] << "    |     " << C[7] << "    |    " << B[2] << "    |" << endl;
+	cout << "\t\t\t\t\t" << "|------------------------------------|" << endl;
+	cout << "\t\t\t\t\t" << "|    " << A[1] << "    |     " << C[8] << "    |    " << B[1] << "    |" << endl;
+	cout << "\t\t\t\t\t" << "|------------------------------------|" << endl;
+	cout << "\t\t\t\t\t" << "     " << A[0] << "    |     " << C[9] << "    |    " << B[0] << "     " << endl;
+	cout << "\t\t\t\t\t" << " \t    --------------       \t" << endl;
+	cout << "\t\t\t\t\t" << "     " << A[15] << "    |     " << C[10] << "    |    " << B[15] << "     " << endl;
+	cout << "\t\t\t\t\t" << "|------------------------------------|" << endl;
+	cout << "\t\t\t\t\t" << "|    " << A[14] << "    |     " << C[11] << "    |    " << B[5] << "    |" << endl;
+	cout << "\t\t\t\t\t" << "|------------------------------------|" << endl;
+	cout << "\t\t\t\t\t" << "|    " << A[13] << "    |     " << C[12] << "    |    " << B[4] << "    |" << endl;
+	cout << "\t\t\t\t\t" << "--------------------------------------" << endl;
+}
+
+int dados (int dado1, int dado2, int dado3, int dado4) {
+	srand(time(NULL));
+	int resultado=0;
+
+    if (dado1 == 1)
+    	resultado = resultado + 1;
+	if (dado2 == 1)
+    	resultado = resultado + 1;
+    if (dado3 == 1)
+    	resultado = resultado + 1;
+    if (dado4 == 1)
+    	resultado = resultado + 1;
+    
+    return resultado;
+}
+
+int main() {
+	setlocale (LC_ALL, "Portuguese");
+	cout << "\n\t\t\t\t\t\t********************" << endl;
+	cout << "\t\t\t\t\t\tJOGO DE TABULEIRO UR" << endl;
+	cout << "\t\t\t\t\t\t********************\n" << endl;
+	
+	cout << "=> O projeto se baseia em um jogo datado de aproximadamente 2500 a.C., descoberto por escavações feitas na antiga cidade de Ur, porém não era possível jogá-lo porque ninguém vivo conhecia as regras do jogo." << endl;
+	cout << "\n=> Com o passar do tempo acharam uma tabuleta de argila com instruções de como jogá-lo, e basicamente é assim: é um jogo de corrida, aonde jogam-se dois jogadores e cada um tem sete peças. O obejtivo do jogo é atravessar o tabuleiro antes que o seu adversário." << endl;
+	cout << "\n************************************************************************************************************************";
+	cout << "************************************************************************************************************************" << endl;
+	cout << "\t\t\t\t\t\t\t#Regras:" << endl;
+	cout << "1 -> Se você para em uma das casas do corredor e seu adversário também, você sai do jogo com a peça e começa de novo." << endl;
+	cout << "\n2 -> Os quadrados com estrela lhe dão um segundo lance e você estará seguro neles, se estiver lá, ninguém pode parar ali ou te tirar." << endl;
+	cout << "\n3 -> Os tetraedros tem dois dos quatro cantos arcados com uma ponta branca. Quando você joga quatro deles é um número aleatório de pontas brancas, que ficam para cima e é assim que se obtém sua pontuação." << endl;
+	cout << "Se jogar os quatro e não detiver alguma marca branca você perde a vez. (É zero).\n" << endl;
+	
+	system("pause");
+	system("cls");
+	
+	char ur[3][16];
+	
+	string A[16] = "   ";
+	string B[16] = "   ";
+	string C[16] = "   ";
+	
+	string died = "";
+		
+	int a1=0, a2=0, a3=0, a4=0;
+	int b1=0, b2=0, b3=0, b4=0;
+	int peca=0;
+	
+	int jogador=0, W1=4, W2=4;
+	
+	while(W1 != 0 || W2 != 0) {
+		system("pause");
+		system("cls");
+		tabuleiro(A, B, C);
+		srand(time(NULL));
+		int dado1 = rand()%2, dado2 = rand()%2, dado3 = rand()%2, dado4 = rand()%2;
+		
+		//************************************************************************************
+		// -------------------------------- JOGADOR 1 ---------------------------------------		
+		if(jogador == 0) { 
+			JogadaP1:
+			cout << "\n\tJOGADOR 1\n" << endl;
+			cout << "\nPeças restantes: " << W1;
+			
+			cout << "\n\n\tOBS: para ganhar o jogo é preciso o número exato do dado a partir do ponto que vc se encontra no tabuleiro.\n\n";
+			
+			cout  << "DADOS: " << dados(dado1, dado2, dado3, dado4) << endl;
+			cout << "\nTecle 1, 2, 3 ou 4 para escolher com qual peça deseja andar." << endl;
+			cin >> peca;
+				
+			if(peca > 4) {
+				cout << "\nTecle 1, 2, 3 ou 4 para escolher com qual peça deseja andar." << endl;
+				cin >> peca;
+			}
+			
+			// Peça 1 - Jogador 1	
+			if (peca == 1) {
+				if ((A[12] == " a1") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[13] == " a1") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[14] == " a1") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+									
+				A[a1] = "   ";
+				C[a1] = "   ";
+					
+				if (died == " a1") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					a1 = 0;
+				}
+					
+				a1 = a1 + dados(dado1, dado2, dado3, dado4);
+					
+				if(a1 == 0){
+					jogador = 1;	 
+				}
+				
+				else {
+					if (A[a1] == " a2" || A[a1] == " a3" || A[a1] == " a4" || C[a1] == " a2" || C[a1] == " a3" || C[a1] == " a4") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a1 = a1 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+				
+					else if ((a1==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a1 = a1 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+					
+					else if (A[a1] != "   " && A[a1] != " * ") {
+						if(A[a1] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W1 = W1 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << A[a1];
+							died = A[a1];
+							A[a1] = " a1";
+						}	
+					}
+					
+					else if (C[a1] != "   " && C[a1] != " * ") {
+						cout << "Comeu a peça " << C[a1];
+						died = C[a1];
+						C[a1] = " a1";
+					}
+					
+					else {
+						A[a1] = " a1";
+						C[a1] = " a1";
+					}
+					
+					
+					if(A[4] == " a1" || A[14] == " a1" || C[8] == " a1") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						A[a1] = " a1";
+						C[a1] = " a1";
+						tabuleiro(A, B, C);
+						goto JogadaP1;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+			
+			//---------------------------------------------------------------------------------------------
+			// Peça 2 - Jogador 1		
+			else if (peca == 2) {
+				if ((A[12] == " a2") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[13] == " a2") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[14] == " a2") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+									
+				A[a2] = "   ";
+				C[a2] = "   ";
+					
+				if (died == " a2") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					a2 = 0;
+				}
+					
+				a2 = a2 + dados(dado1, dado2, dado3, dado4);
+					
+				if(a2 == 0){
+					jogador = 1;	 
+				}
+				
+				else {
+					if (A[a2] == " a1" || A[a2] == " a3" || A[a2] == " a4" || C[a2] == " a1" || C[a2] == " a3" || C[a2] == " a4") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a2 = a2 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+				
+					else if ((a2==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a2 = a2 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+					
+					else if (A[a2] != "   " && A[a2] != " * ") {
+						if(A[a2] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W1 = W1 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << A[a2];
+							died = A[a2];
+							A[a2] = " a2";
+						}	
+					}
+					
+					else if (C[a2] != "   " && C[a2] != " * ") {
+						cout << "Comeu a peça " << C[a2];
+						died = C[a2];
+						C[a2] = " a2";
+					}
+					
+					else {
+						A[a2] = " a2";
+						C[a2] = " a2";
+					}
+					
+					
+					if(A[4] == " a2" || A[14] == " a2" || C[8] == " a2") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						A[a2] = " a2";
+						C[a2] = " a2";
+						tabuleiro(A, B, C);
+						goto JogadaP1;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+					
+			//---------------------------------------------------------------------------------------------
+			// Peça 3 - Jogador 1		
+			else if (peca == 3) {
+				if ((A[12] == " a3") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[13] == " a3") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[14] == " a3") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+									
+				A[a3] = "   ";
+				C[a3] = "   ";
+					
+				if (died == " a3") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					a3 = 0;
+				}
+					
+				a3 = a3 + dados(dado1, dado2, dado3, dado4);
+					
+				if(a3 == 0){
+					jogador = 1;	 
+				}
+				
+				else {
+					if (A[a3] == " a1" || A[a3] == " a2" || A[a3] == " a4" || C[a3] == " a1" || C[a3] == " a2" || C[a1] == " a4") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a3 = a3 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+				
+					else if ((a3==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a3 = a3 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+					
+					else if (A[a3] != "   " && A[a3] != " * ") {
+						if(A[a3] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W1 = W1 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << A[a3];
+							died = A[a3];
+							A[a3] = " a3";
+						}	
+					}
+					
+					else if (C[a3] != "   " && C[a3] != " * ") {
+						cout << "Comeu a peça " << C[a3];
+						died = C[a3];
+						C[a3] = " a3";
+					}
+					
+					else {
+						A[a3] = " a3";
+						C[a3] = " a3";
+					}
+					
+					
+					if(A[4] == " a3" || A[14] == " a3" || C[8] == " a3") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						A[a3] = " a3";
+						C[a3] = " a3";
+						tabuleiro(A, B, C);
+						goto JogadaP1;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+			
+			//---------------------------------------------------------------------------------------------
+			// Peça 4 - Jogador 1		
+			else if (peca == 4) {
+				if ((A[12] == " a4") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[13] == " a4") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+				
+				else if ((A[14] == " a4") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP1;
+				}
+									
+				A[a4] = "   ";
+				C[a4] = "   ";
+					
+				if (died == " a4") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					a4 = 0;
+				}
+					
+				a4 = a4 + dados(dado1, dado2, dado3, dado4);
+					
+				if(a4 == 0){
+					jogador = 1;	 
+				}
+				
+				else {
+					if (A[a4] == " a1" || A[a4] == " a2" || A[a4] == " a3" || C[a4] == " a1" || C[a4] == " a2" || C[a4] == " a3") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a4 = a4 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+				
+					else if ((a4==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						a4 = a4 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP1;
+					}
+					
+					else if (A[a4] != "   " && A[a4] != " * ") {
+						if(A[a4] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W1 = W1 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << A[a4];
+							died = A[a4];
+							A[a4] = " a4";
+						}	
+					}
+					
+					else if (C[a4] != "   " && C[a4] != " * ") {
+						cout << "Comeu a peça " << C[a4];
+						died = C[a4];
+						C[a4] = " a4";
+					}
+					
+					else {
+						A[a4] = " a4";
+						C[a4] = " a4";
+					}
+					
+					
+					if(A[4] == " a4" || A[14] == " a4" || C[8] == " a4") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						A[a4] = " a4";
+						C[a4] = " a4";
+						tabuleiro(A, B, C);
+						goto JogadaP1;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+		}
+		
+		jogador = 1;
+		
+		system("pause");
+		system("cls");
+		tabuleiro(A, B, C);
+		
+		srand(time(NULL));
+		dado1 = rand() % 2, dado2 = rand() % 2, dado3 = rand() % 2, dado4 = rand() % 2;
+			
+			
+		//************************************************************************************
+		// -------------------------------- JOGADOR 2 ---------------------------------------
+		if(jogador == 1) { 
+			JogadaP2:
+			cout << "\n\tJOGADOR 2\n" << endl;
+			cout << "\nPeças restantes: " << W2;
+			
+			cout << "\n\n\tOBS: para ganhar o jogo é preciso o número exato do dado a partir do ponto que vc se encontra no tabuleiro.\n\n";
+			
+			cout  << "DADOS: " << dados(dado1, dado2, dado3, dado4) << endl;
+			cout << "\nTecle 1, 2, 3 ou 4 para escolher com qual peça deseja andar." << endl;
+			cin >> peca;
+				
+			if(peca > 4) {
+				cout << "\nTecle 1, 2, 3 ou 4 para escolher com qual peça deseja andar." << endl;
+				cin >> peca;
+			}
+				
+			if (peca == 1) {
+				if ((B[12] == " b1") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[13] == " b1") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[14] == " b1") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+									
+				B[b1] = "   ";
+				C[b1] = "   ";
+					
+				if (died == " b1") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					b1 = 0;
+				}
+					
+				b1 = b1 + dados(dado1, dado2, dado3, dado4);
+					
+				if(b1 == 0){
+					jogador = 0;	 
+				}
+				
+				else {
+					if (B[b1] == " b2" || B[b1] == " b3" || B[b1] == " b4" || C[b1] == " b2" || C[b1] == " b3" || C[b1] == " b4") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b1 = b1 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+				
+					else if ((b1==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b1 = b1 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+					
+					else if (B[b1] != "   " && B[b1] != " * ") {
+						if(B[b1] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W2 = W2 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << B[b1];
+							died = B[b1];
+							B[b1] = " b1";
+						}	
+					}
+					
+					else if (C[b1] != "   " && C[b1] != " * ") {
+						cout << "Comeu a peça " << C[b1];
+						died = C[b1];
+						C[b1] = " b1";
+					}
+					
+					else {
+						B[b1] = " b1";
+						C[b1] = " b1";
+					}
+					
+					
+					if(B[4] == " b1" || B[14] == " b1" || C[8] == " b1") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						B[b1] = " b1";
+						C[b1] = " b1";
+						tabuleiro(A, B, C);
+						goto JogadaP2;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+			
+			//---------------------------------------------------------------------------------------------
+			// Peça 2 - Jogador 2		
+			else if (peca == 2) {
+				if ((B[12] == " b2") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[13] == " b2") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[14] == " b2") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+									
+				B[b2] = "   ";
+				C[b2] = "   ";
+					
+				if (died == " b2") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					b2 = 0;
+				}
+					
+				b2 = b2 + dados(dado1, dado2, dado3, dado4);
+					
+				if(b2 == 0){
+					jogador = 0;	 
+				}
+				
+				else {
+					if (B[b2] == " b1" || B[b2] == " b3" || B[b2] == " b4" || C[b2] == " b1" || C[b2] == " b3" || C[b2] == " b4") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b2 = b2 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+				
+					else if ((b2==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b2 = b2 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+					
+					else if (B[b2] != "   " && B[b2] != " * ") {
+						if(B[b2] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W2 = W2 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << B[b1];
+							died = B[b2];
+							B[b2] = " b2";
+						}	
+					}
+					
+					else if (C[b2] != "   " && C[b2] != " * ") {
+						cout << "Comeu a peça " << C[b2];
+						died = C[b2];
+						C[b2] = " b2";
+					}
+					
+					else {
+						B[b2] = " b2";
+						C[b2] = " b2";
+					}
+					
+					
+					if(B[4] == " b2" || B[14] == " b2" || C[8] == " b2") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						B[b2] = " b2";
+						C[b2] = " b2";
+						tabuleiro(A, B, C);
+						goto JogadaP2;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+					
+			//---------------------------------------------------------------------------------------------
+			// Peça 3 - Jogador 2		
+			else if (peca == 3) {
+				if ((B[12] == " b3") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[13] == " b3") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[14] == " b3") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+									
+				B[b3] = "   ";
+				C[b3] = "   ";
+					
+				if (died == " b3") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					b3 = 0;
+				}
+					
+				b3 = b3 + dados(dado1, dado2, dado3, dado4);
+					
+				if(b3 == 0){
+					jogador = 0;	 
+				}
+				
+				else {
+					if (B[b3] == " b1" || B[b3] == " b2" || B[b3] == " b4" || C[b3] == " b1" || C[b3] == " b2" || C[b3] == " b4") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b3 = b3 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+				
+					else if ((b3==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b3 = b3 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+					
+					else if (B[b3] != "   " && B[b3] != " * ") {
+						if(B[b3] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W2 = W2 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << B[b3];
+							died = B[b3];
+							B[b3] = " b3";
+						}	
+					}
+					
+					else if (C[b3] != "   " && C[b3] != " * ") {
+						cout << "Comeu a peça " << C[b3];
+						died = C[b3];
+						C[b3] = " b3";
+					}
+					
+					else {
+						B[b3] = " b3";
+						C[b3] = " b3";
+					}
+					
+					
+					if(B[4] == " b3" || B[14] == " b3" || C[8] == " b3") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						B[b3] = " b3";
+						C[b3] = " b3";
+						tabuleiro(A, B, C);
+						goto JogadaP2;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+			
+			//---------------------------------------------------------------------------------------------
+			// Peça 4 - Jogador 2		
+			else if (peca == 4) {
+				if ((B[12] == " b4") && (dados(dado1, dado2, dado3, dado4)>3)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[13] == " b4") && (dados(dado1, dado2, dado3, dado4)>2)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+				
+				else if ((B[14] == " b4") && (dados(dado1, dado2, dado3, dado4) > 1)) {
+					cout << "Movimento de peça inválido. Escolha outra...";
+					goto JogadaP2;
+				}
+									
+				B[b4] = "   ";
+				C[b4] = "   ";
+					
+				if (died == " b4") {
+					cout << "\nEssa peça foi comida, voltou para a posição INI";
+					died = "";
+					b4 = 0;
+				}
+					
+				b4 = b4 + dados(dado1, dado2, dado3, dado4);
+					
+				if(b4 == 0){
+					jogador = 0;	 
+				}
+				
+				else {
+					if (B[b4] == " b1" || B[b4] == " b2" || B[b4] == " b3" || C[b4] == " b1" || C[b4] == " b2" || C[b4] == " b3") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b4 = b4 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+				
+					else if ((b4==8) && C[8] != " * ") {
+						cout << "Movimento de peça inválido. Escolha outra...";
+						b4 = b4 - dados(dado1, dado2, dado3, dado4);
+						goto JogadaP2;
+					}
+					
+					else if (B[b4] != "   " && B[b4] != " * ") {
+						if(B[b4] == "FIM") {
+							cout << "Parabéns, essa peça concluiu o percurço." << endl;
+							W2 = W2 - 1;
+						}
+						
+						else {
+							cout << "Comeu a peça " << B[b4];
+							died = B[b4];
+							B[b4] = " b4";
+						}	
+					}
+					
+					else if (C[b4] != "   " && C[b4] != " * ") {
+						cout << "Comeu a peça " << C[b4];
+						died = C[b4];
+						C[b4] = " b4";
+					}
+					
+					else {
+						B[b4] = " b4";
+						C[b4] = " b4";
+					}
+					
+					
+					if(B[4] == " b4" || B[14] == " b4" || C[8] == " b4") {
+						cout << "\nPosição especial, dados serão jogados novamente." << endl;
+						B[b4] = " b4";
+						C[b4] = " b4";
+						tabuleiro(A, B, C);
+						goto JogadaP2;
+					}
+				}
+						
+				tabuleiro(A, B, C);
+			}
+			
+			jogador = 0;
+		}
+	}
+	
+	if(W1 == 0) {
+		cout << "Jogador 1 ganhou!";
+	}
+	
+	else if(W2 == 0) {
+		cout << "Jogador 2 ganhou!";
+	}
+	
+	return 0;
+}
