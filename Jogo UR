@@ -55,7 +55,7 @@ int dados (int dado1, int dado2, int dado3, int dado4) {
 
     if (dado1 == 1)
     	resultado = resultado + 1;
-	if (dado2 == 1)
+    if (dado2 == 1)
     	resultado = resultado + 1;
     if (dado3 == 1)
     	resultado = resultado + 1;
